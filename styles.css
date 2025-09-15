@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1e90ff;
+    --text-color: #fff;
+    --secondary-text-color: #aaa;
+    --background-color: #000;
+    --hover-color: #1c86ee;
+    --transitions: 0.3s ease;
+}
+
+body, html {
+    height: 100%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: 800;
+}
+
+.btn {
+    font-size: 1.5rem;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 1rem;
+    text-shadow: none;   
+    margin-top: 2rem;   
+    transition: var(--transitions);  
+}
+
+.btn:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+/*==================== Deck of Cards ====================*/
+.card {
+    width: 100px;
+    height: 140px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.card-value {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card-suit {
+    font-size: 30px;
+    text-align: center;
+}
+
+.card-top, .card-bottom {
+    padding: 5px;
+}
+
+.card-bottom {
+    transform: rotate(180deg);
+}
+
+.red {
+    color: red;
+}
+
+.black {
+    color: black;
+}
