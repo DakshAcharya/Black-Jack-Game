@@ -35,3 +35,49 @@ function dealCards(hand, deck) {
     hand.push(card);
     return card;
 }
+
+function startGame() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    createDeck();
+    deck = shuffleDeck(deck);
+    playerHand = [];
+    dealerHand = [];
+}
+
+function calculateCardValue(card) {
+    let playerSum = 0;
+    if ((card.value).includes(['J', 'Q', 'K'])) {
+        playerSum += 10;
+    }
+    
+    if (card.value === 'A') {
+        playerSum += 11;
+        if (playerSum > 21) {
+            playerSum -= 10;
+        }
+    }
+
+    if (card.value >= '2' && card.value <= '10') {
+        playerSum = parseInt(card.value);
+    }
+
+    return playerSum;
+
+    let dealerSum = 0;
+    if ((card.value).includes(['J', 'Q', 'K'])) {
+        dealerSum += 10;
+    }
+    
+    if (card.value === 'A') {
+        dealerSum += 11;
+        if (dealerSum > 21) {
+            dealerSum -= 10;
+        }
+    }
+
+    if (card.value >= '2' && card.value <= '10') {
+        dealerSum = parseInt(card.value);
+    }
+
+    return dealerSum;
+}
