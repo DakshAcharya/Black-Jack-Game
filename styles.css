@@ -22,6 +22,7 @@ body, html {
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: 'Poppins', Arial, sans-serif;
+    scroll-behavior: smooth;
 }
 
 .player-cards,
@@ -45,12 +46,13 @@ body, html {
     font-size: 3rem;
     font-weight: 900;
 }
+
+/* ===== MESSAGE DIALOG ===== */
 .msg-dialog {
     text-align: center;
     font-size: 1.5rem;
-    margin-top: 1rem;
     min-height: 2rem;
-    top: 50%0;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--primary-color);
@@ -59,25 +61,54 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
-    border-radius: 8px;
-    background: var(--secondary-background-color);
-    box-shadow: 0 0 15px var(--hover-color);
-    animation: fadeIn 0.5s ease-in-out;
+    padding: 3rem;
+    border-radius: 16px;
+    background: rgba(17, 17, 17, 0.95);
+    box-shadow: 
+        0 0 40px rgba(30, 144, 255, 0.4),
+        0 20px 40px rgba(0, 0, 0, 0.6);
+    animation: dialogFadeIn 0.4s ease-out;
     position: fixed;
     z-index: 1000;
     width: 90%;
-    max-width: 400px;
+    max-width: 450px;
+    border: 1px solid rgba(30, 144, 255, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.msg-dialog::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--gradient);
+    border-radius: 18px;
+    z-index: -1;
+    opacity: 0.3;
 }
 
 .msg-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.msg-dialog h2 {
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+    color: var(--text-color);
+    font-weight: 800;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .msg-dialog p {
     margin-bottom: 1rem;
-    font-size: 1.2rem;    
+    font-size: 1.2rem;
+    color: var(--secondary-text-color);
+    line-height: 1.5;
 }
 
 .dialog-controls {
@@ -85,26 +116,36 @@ body, html {
     gap: 1rem;
     justify-content: center;
     align-items: center;
+    margin-top: 1rem;
 }
 
 .dialog-controls .btn {
     font-size: 1rem;
-    padding: 0.8rem 1.5rem;
+    padding: 0.9rem 1.8rem;
     color: var(--text-color);
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), #0d6efd);
     text-decoration: none;
     font-weight: 500;
     border-radius: 50px;
     margin-top: 0;
     border: none;
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+    transition: all 0.3s ease;
 }
 
-.msg-dialog h2 {
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    color: var(--text-color);
-    font-weight: 800;
-    text-align: center;
+.dialog-controls .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(30, 144, 255, 0.5);
+}
+
+/* New fade-in animation without upward shift */
+@keyframes dialogFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .hero {
@@ -132,7 +173,7 @@ body, html {
     text-decoration: none;
     font-weight: 600;
     border-radius: 50px;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     transition: var(--transitions);
     border: 3px solid var(--text-color);
 }
@@ -246,10 +287,22 @@ footer a {
     padding: 1rem 2rem;
     background: var(--secondary-background-color);
     color: var(--secondary-text-color);
-    text-align: center;
-    font-size: 1.2rem;
-    max-width: 800px;
+    font-size: 1rem;
     margin: 1rem auto;
     border-radius: 8px; 
-    transition: var(--transitions) fadeIn 1s ease-in;
+    max-width: 40vw;
+}
+
+.rules ul li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    margin-left: 0.5rem;
+}
+
+.rules h2 {
+    text-align: center;
+    font-size: 1.7rem;
+    margin-bottom: 0.7rem;
+    font-weight: 800;
+    color: var(--text-color);
 }

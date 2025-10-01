@@ -21,9 +21,17 @@
     <main class="main-content">
         <section class="game-intro">
             <div class="rules">
-                <p>In Blackjack, your goal is to beat the dealer by having a hand value closer to 21 without going over. You start with two cards and can choose to "Hit" to get another card or "Stand" to keep your current hand. The dealer also gets two cards, with one face down. If you go over 21, you lose. If the dealer goes over 21, you win. Otherwise, the higher hand wins.</p>
+                <h2>Blackjack Rules</h2>
+                <ul class="rules-list">
+                    <li><strong>Objective:</strong> Beat the dealer by having a hand value closer to 21 without going over</li>
+                    <li><strong>Card Values:</strong> Number cards (2-10) = face value, Face cards (J,Q,K) = 10, Aces = 1 or 11</li>
+                    <li><strong>Your Turn Options:</strong> "Hit" to receive another card, "Stand" to keep your current hand</li>
+                    <li><strong>Dealer's Rules:</strong> Dealer must hit until reaching 17 or higher</li>
+                    <li><strong>Busting:</strong> If your hand exceeds 21, you automatically lose your bet</li>
+                    <li><strong>Winning Conditions:</strong> Beat the dealer's hand without busting, or win if dealer busts</li>
+                    <li><strong>Ties:</strong> Equal hand values result in a "push" - your bet is returned</li>
+                </ul>
             </div>
-
             <div class="start-controls">
                 <button onclick="startGame()" class="btn">Play Now</button>
             </div>

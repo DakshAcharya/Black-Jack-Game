@@ -1,3 +1,4 @@
+// ===== GAME CONSTANTS AND VARIABLES =====
 const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 let deck = [];
@@ -6,6 +7,8 @@ let bet = 0;
 let playerHand = [];
 let dealerHand = [];
 let result = '';
+
+// ===== DECK MANAGEMENT FUNCTIONS =====
 
 // Create a standard deck of 52 cards
 function createDeck() {
@@ -22,7 +25,6 @@ function shuffleDeck(deck) {
 
     for (let x = shuffledDeck.length - 1; x > 0; x--) {
         const y = Math.floor(Math.random() * (x + 1));
-        
         let temp = shuffledDeck[x];
         shuffledDeck[x] = shuffledDeck[y];
         shuffledDeck[y] = temp;
@@ -30,6 +32,8 @@ function shuffleDeck(deck) {
 
     return shuffledDeck;
 }
+
+// ===== CARD DEALING AND HAND MANAGEMENT =====
 
 // Deal a card from the deck to a hand
 function dealCards(hand, deck, containerSelector) {
@@ -40,43 +44,23 @@ function dealCards(hand, deck, containerSelector) {
 
     const cardElement = createCardElement(card);
     const container = document.querySelector(containerSelector);
+    
     if (container) {
         container.appendChild(cardElement);
     } else {
         console.error('Container not found for selector:', containerSelector);
     }
 
+    // Check if player busts after hitting
     if (containerSelector === '.player-cards' && calculateHandValue(playerHand) > 21) {
-        result = "You Busted, Dealer Wins!"
+        result = "You Busted, Dealer Wins!";
         showMsgDialog();
     }
 
     return card;
 }
 
-function startGame() {
-    document.getElementById('msg-dialog').style.display = "none"
-    document.getElementById('players').style.display = 'block';
-    document.getElementById('game').style.height = '100vh';
-    document.querySelector("footer").style.position = "relative"
-    deck = [];
-    createDeck();
-    deck = shuffleDeck(deck);
-
-    playerHand = [];
-    dealerHand = [];
-
-    document.querySelector('.player-cards').innerHTML = ''; 
-
-    dealCards(playerHand, deck, '.player-cards');
-    dealCards(playerHand, deck, '.player-cards');
-
-    document.querySelector('.dealer-cards').innerHTML = '';
-    dealCards(dealerHand, deck, '.dealer-cards');
-    dealCards(dealerHand, deck, '.dealer-cards');
-}
-
-// Calculate the card's value - FIXED
+// Calculate the card's value
 function calculateCardValue(card) {
     if (['J', 'Q', 'K'].includes(card.value)) {
         return 10;
@@ -87,7 +71,7 @@ function calculateCardValue(card) {
     }
 }
 
-// Calculate the hand's value from the card values - FIXED
+// Calculate the hand's total value
 function calculateHandValue(hand) {
     let sum = 0;
     let aces = 0;
@@ -100,6 +84,7 @@ function calculateHandValue(hand) {
         }
     }
     
+    // Adjust for aces if bust
     while (sum > 21 && aces > 0) {
         sum -= 10;
         aces--;
@@ -108,11 +93,65 @@ function calculateHandValue(hand) {
     return sum;
 }
 
+// ===== GAME FLOW FUNCTIONS =====
+
+// Start a new game
+function startGame() {
+    document.getElementById('msg-dialog').style.display = "none";
+    document.getElementById('players').style.display = 'block';
+    document.getElementById('game').style.height = '100vh';
+    document.querySelector("footer").style.position = "relative";
+
+    document.location = "#game"
+    
+    deck = [];
+    createDeck();
+    deck = shuffleDeck(deck);
+
+    playerHand = [];
+    dealerHand = [];
+
+    // Clear and deal initial cards
+    document.querySelector('.player-cards').innerHTML = '';
+    dealCards(playerHand, deck, '.player-cards');
+    dealCards(playerHand, deck, '.player-cards');
+
+    document.querySelector('.dealer-cards').innerHTML = '';
+    dealCards(dealerHand, deck, '.dealer-cards');
+    dealCards(dealerHand, deck, '.dealer-cards');
+}
+
+// Player stands, dealer plays
+function stand() {
+    // Dealer draws until 17 or higher
+    while (calculateHandValue(dealerHand) < 17) {
+        dealCards(dealerHand, deck, '.dealer-cards');
+    }
+
+    const playerValue = calculateHandValue(playerHand);
+    const dealerValue = calculateHandValue(dealerHand);
+
+    // Determine game result
+    if (dealerValue > 21) {
+        result = "Dealer busts! Player wins!";
+    } else if (playerValue > dealerValue) {
+        result = "Player wins!";
+    } else if (playerValue < dealerValue) {
+        result = "Dealer wins!";
+    } else {
+        result = "It's a tie!";
+    }
+    
+    showMsgDialog();
+}
+
+// Show message dialog with current result
 function showMsgDialog() {
     document.querySelector(".msg-dialog h2").textContent = result;
     document.getElementById('msg-dialog').style.display = "flex";
 }
 
+// Reset game state
 function endGame() {
     deck = [];
     money = 1000;
@@ -124,23 +163,13 @@ function endGame() {
     document.getElementById('game').style.height = 'auto';
     document.querySelector('.player-cards').innerHTML = '';
     document.querySelector('.dealer-cards').innerHTML = '';
-
-    document.getElementById('msg-dialog').style.display = "none"
+    document.getElementById('msg-dialog').style.display = "none";
+    document.querySelector("footer").style.position = 'absolute'
 }
 
-// Place a bet 
-function makeBet(amount) {
-    if (amount > money || amount <= 0) {
-        alert("Not enough money");
-        return false;
-    }
+// ===== UI RENDERING FUNCTIONS =====
 
-    bet = amount; 
-    money -= bet;
-    return true;
-}
-
-// The card visuals
+// Create card visual element
 function createCardElement(card) {
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
@@ -167,7 +196,7 @@ function createCardElement(card) {
     return cardElement;
 }
 
-// Get the suit
+// Get suit symbol for display
 function getSuitSymbol(suit) {
     switch (suit) {
         case 'Hearts': return '♥';
@@ -177,28 +206,16 @@ function getSuitSymbol(suit) {
     }
 }
 
-// Add missing stand function
-function stand() {
-    while (calculateHandValue(dealerHand) < 17) {
-        dealCards(dealerHand, deck, '.dealer-cards');
+// ===== BETTING FUNCTIONS =====
+
+// Place a bet
+function makeBet(amount) {
+    if (amount > money || amount <= 0) {
+        alert("Not enough money");
+        return false;
     }
 
-    const playerValue = calculateHandValue(playerHand);
-    const dealerValue = calculateHandValue(dealerHand);
-    let isWin = false;
-
-    if (dealerValue > 21) {
-        result = "Dealer busts! Player wins!";
-        isWin = true;
-    } else if (playerValue > dealerValue) {
-        result = "Player wins!";
-        isWin = true;
-    } else if (playerValue < dealerValue) {
-        result = "Dealer wins!";
-        isWin = false;
-    } else {
-        result = "It's a tie!";
-        isWin =false;
-    }
-    showMsgDialog();
+    bet = amount;
+    money -= bet;
+    return true;
 }
