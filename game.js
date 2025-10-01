@@ -6,6 +6,7 @@ let bet = 0;
 let playerHand = [];
 let dealerHand = [];
 
+// Create a standard deck of 52 cards
 function createDeck() {
     for (let suit of suits) {
         for (let value of values) {
@@ -14,6 +15,7 @@ function createDeck() {
     }
 }
 
+// Shuffle the deck using Fisher-Yates algorithm
 function shuffleDeck(deck) {
     let shuffledDeck = [...deck];
 
@@ -28,6 +30,7 @@ function shuffleDeck(deck) {
     return shuffledDeck;
 }
 
+// Deal a card from the deck to a hand
 function dealCards(hand, deck) {
     let randomIndex = Math.floor(Math.random() * deck.length);
     const card = deck[randomIndex];
@@ -44,40 +47,51 @@ function startGame() {
     dealerHand = [];
 }
 
+// Calculate the card's value
 function calculateCardValue(card) {
-    let playerSum = 0;
+    let sum = 0;
     if ((card.value).includes(['J', 'Q', 'K'])) {
-        playerSum += 10;
+        sum += 10;
     }
     
     if (card.value === 'A') {
-        playerSum += 11;
-        if (playerSum > 21) {
-            playerSum -= 10;
+        sum += 11;
+        if (sum > 21) {
+            sum -= 10;
         }
     }
 
     if (card.value >= '2' && card.value <= '10') {
-        playerSum = parseInt(card.value);
+        sum = parseInt(card.value);
     }
 
-    return playerSum;
+    return sum;
+}
 
-    let dealerSum = 0;
-    if ((card.value).includes(['J', 'Q', 'K'])) {
-        dealerSum += 10;
+// Calculate the hand's value from the card values
+function calculateHandValue(hand) {
+    let sum = 0
+    for (let card of hand) {
+        sum += calculateCardValue(card);
     }
-    
-    if (card.value === 'A') {
-        dealerSum += 11;
-        if (dealerSum > 21) {
-            dealerSum -= 10;
-        }
+    return sum;
+}
+
+// Place a bet
+function makeBet(amount) {
+    if (amount > money || amount <= 0) {
+        alert("Not enough money");
+        return false;
     }
 
-    if (card.value >= '2' && card.value <= '10') {
-        dealerSum = parseInt(card.value);
-    }
+    let bet = amount;
+    money -= bet;
+    return true;
+}
 
-    return dealerSum;
+function createCardElement(card) {
+    const cardElement = document.createElement("div")
+    cardElement.classList.add("card")
+    cardElement.innerText = `${card.value} of ${card.suit}`
+    return cardElement
 }

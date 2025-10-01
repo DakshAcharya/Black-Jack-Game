@@ -60,6 +60,30 @@ body, html {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
+.player .btn {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 50px;
+    margin-top: 2rem;
+    border: none;
+}
+
+.player .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--hover-color);
+}
+
+.button-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
