@@ -5,6 +5,7 @@ let money = 1000;
 let bet = 0;
 let playerHand = [];
 let dealerHand = [];
+let result = '';
 
 // Create a standard deck of 52 cards
 function createDeck() {
@@ -45,12 +46,19 @@ function dealCards(hand, deck, containerSelector) {
         console.error('Container not found for selector:', containerSelector);
     }
 
+    if (containerSelector === '.player-cards' && calculateHandValue(playerHand) > 21) {
+        result = "You Busted, Dealer Wins!"
+        showMsgDialog();
+    }
+
     return card;
 }
 
 function startGame() {
+    document.getElementById('msg-dialog').style.display = "none"
     document.getElementById('players').style.display = 'block';
     document.getElementById('game').style.height = '100vh';
+    document.querySelector("footer").style.position = "relative"
     deck = [];
     createDeck();
     deck = shuffleDeck(deck);
@@ -97,21 +105,37 @@ function calculateHandValue(hand) {
         aces--;
     }
 
-    if (sum > 21) {
-        alert("Bust!");
-    }
-
     return sum;
 }
 
-// Place a bet - FIXED
+function showMsgDialog() {
+    document.querySelector(".msg-dialog h2").textContent = result;
+    document.getElementById('msg-dialog').style.display = "flex";
+}
+
+function endGame() {
+    deck = [];
+    money = 1000;
+    bet = 0;
+    playerHand = [];
+    dealerHand = [];
+
+    document.getElementById('players').style.display = 'none';
+    document.getElementById('game').style.height = 'auto';
+    document.querySelector('.player-cards').innerHTML = '';
+    document.querySelector('.dealer-cards').innerHTML = '';
+
+    document.getElementById('msg-dialog').style.display = "none"
+}
+
+// Place a bet 
 function makeBet(amount) {
     if (amount > money || amount <= 0) {
         alert("Not enough money");
         return false;
     }
 
-    bet = amount; // Removed 'let' to use global variable
+    bet = amount; 
     money -= bet;
     return true;
 }
@@ -155,6 +179,26 @@ function getSuitSymbol(suit) {
 
 // Add missing stand function
 function stand() {
+    while (calculateHandValue(dealerHand) < 17) {
+        dealCards(dealerHand, deck, '.dealer-cards');
+    }
 
+    const playerValue = calculateHandValue(playerHand);
+    const dealerValue = calculateHandValue(dealerHand);
+    let isWin = false;
+
+    if (dealerValue > 21) {
+        result = "Dealer busts! Player wins!";
+        isWin = true;
+    } else if (playerValue > dealerValue) {
+        result = "Player wins!";
+        isWin = true;
+    } else if (playerValue < dealerValue) {
+        result = "Dealer wins!";
+        isWin = false;
+    } else {
+        result = "It's a tie!";
+        isWin =false;
+    }
+    showMsgDialog();
 }
-

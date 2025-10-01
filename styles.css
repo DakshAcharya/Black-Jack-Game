@@ -41,9 +41,70 @@ body, html {
 .player-section h2 {
     padding: 1rem;
     text-align: center;
-    margin: 2rem;
+    margin: 1.5rem 1rem 1rem 1rem;
+    font-size: 3rem;
+    font-weight: 900;
+}
+.msg-dialog {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    min-height: 2rem;
+    top: 50%0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 8px;
+    background: var(--secondary-background-color);
+    box-shadow: 0 0 15px var(--hover-color);
+    animation: fadeIn 0.5s ease-in-out;
+    position: fixed;
+    z-index: 1000;
+    width: 90%;
+    max-width: 400px;
+}
+
+.msg-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.msg-dialog p {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;    
+}
+
+.dialog-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-controls .btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 50px;
+    margin-top: 0;
+    border: none;
+}
+
+.msg-dialog h2 {
+    margin-bottom: 1rem;
     font-size: 2rem;
+    color: var(--text-color);
     font-weight: 800;
+    text-align: center;
 }
 
 .hero {
@@ -121,11 +182,11 @@ body, html {
 
 footer {
     text-align: center;
-    padding: 1rem;
+    padding: 0.6rem;
     background: #111;
     margin-top: auto;
     color: var(--secondary-text-color);
-    position: relative;
+    position: absolute;
     bottom: 0;
     width: 100%;
 }
@@ -137,8 +198,8 @@ footer a {
 
 /*==================== Deck of Cards ====================*/
 .card {
-    width: 100px;
-    height: 140px;
+    width: 200px;
+    height: 280px;
     border: 1px solid #000;
     border-radius: 8px;
     background: white;
@@ -157,12 +218,13 @@ footer a {
 }
 
 .card-suit {
-    font-size: 30px;
+    font-size: 90px;
     text-align: center;
 }
 
 .card-top, .card-bottom {
     padding: 5px;
+    font-size: 30px ;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
