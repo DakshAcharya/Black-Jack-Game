@@ -49,8 +49,8 @@ function dealCards(hand, deck, containerSelector) {
 }
 
 function startGame() {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-
+    document.getElementById('players').style.display = 'block';
+    document.getElementById('game').style.height = '100vh';
     deck = [];
     createDeck();
     deck = shuffleDeck(deck);
@@ -62,47 +62,56 @@ function startGame() {
 
     dealCards(playerHand, deck, '.player-cards');
     dealCards(playerHand, deck, '.player-cards');
+
+    document.querySelector('.dealer-cards').innerHTML = '';
+    dealCards(dealerHand, deck, '.dealer-cards');
+    dealCards(dealerHand, deck, '.dealer-cards');
 }
 
-
-// Calculate the card's value
+// Calculate the card's value - FIXED
 function calculateCardValue(card) {
-    let sum = 0;
-    if ((card.value).includes(['J', 'Q', 'K'])) {
-        sum += 10;
+    if (['J', 'Q', 'K'].includes(card.value)) {
+        return 10;
+    } else if (card.value === 'A') {
+        return 11;
+    } else {
+        return parseInt(card.value);
     }
+}
+
+// Calculate the hand's value from the card values - FIXED
+function calculateHandValue(hand) {
+    let sum = 0;
+    let aces = 0;
     
-    if (card.value === 'A') {
-        sum += 11;
-        if (sum > 21) {
-            sum -= 10;
+    for (let card of hand) {
+        let value = calculateCardValue(card);
+        sum += value;
+        if (card.value === 'A') {
+            aces++;
         }
     }
+    
+    while (sum > 21 && aces > 0) {
+        sum -= 10;
+        aces--;
+    }
 
-    if (card.value >= '2' && card.value <= '10') {
-        sum = parseInt(card.value);
+    if (sum > 21) {
+        alert("Bust!");
     }
 
     return sum;
 }
 
-// Calculate the hand's value from the card values
-function calculateHandValue(hand) {
-    let sum = 0
-    for (let card of hand) {
-        sum += calculateCardValue(card);
-    }
-    return sum;
-}
-
-// Place a bet
+// Place a bet - FIXED
 function makeBet(amount) {
     if (amount > money || amount <= 0) {
         alert("Not enough money");
         return false;
     }
 
-    let bet = amount;
+    bet = amount; // Removed 'let' to use global variable
     money -= bet;
     return true;
 }
@@ -143,3 +152,9 @@ function getSuitSymbol(suit) {
         case 'Spades': return '♠';
     }
 }
+
+// Add missing stand function
+function stand() {
+
+}
+

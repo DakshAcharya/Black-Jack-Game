@@ -3,45 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong Game</title>
+    <title>Blackjack Game</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="game.js"></script>
 
     <!-- Font Awesome Icons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-	<!-- Google Fonts: Poppins -->
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="hero">
+    <header class="hero">
         <h1>Blackjack Game</h1>
-        <button onclick="startGame()" class="btn">Play Now</button>   
-    </div>
+    </header>
 
-    <div id="game" class="game">
-        <div class="player">
-            <h2>Player</h2>
+    <main class="main-content">
+        <section class="game-intro">
+            <div class="rules">
+                <p>In Blackjack, your goal is to beat the dealer by having a hand value closer to 21 without going over. You start with two cards and can choose to "Hit" to get another card or "Stand" to keep your current hand. The dealer also gets two cards, with one face down. If you go over 21, you lose. If the dealer goes over 21, you win. Otherwise, the higher hand wins.</p>
+            </div>
 
-            <div class="player-cards">
-                <div class="card">
-                    <div class="card-top red">A</div>
-                    <div class="card-suit red">♥</div>
-                    <div class="card-bottom red">A</div>
+            <div class="start-controls">
+                <button onclick="startGame()" class="btn">Play Now</button>
+            </div>
+        </section>
+
+        <section id="game" class="game-area">
+            <div class="game-table" id="players" style="display: none;">
+                <div class="dealer-section">
+                    <h2>Dealer</h2>
+                    <div class="dealer-cards"></div>
+                </div>
+
+                <div class="player-section">
+                    <h2>Player</h2>
+                    <div class="player-cards"></div>
+                </div>
+
+                <div class="game-controls">
+                    <button class="btn" onclick="dealCards(playerHand, deck, '.player-cards')">Hit</button>
+                    <button class="btn" onclick="stand()">Stand</button>
                 </div>
             </div>
-
-
-            <div class="button-container">
-                <button class="btn" onclick="dealCards(playerHand, deck, '.player-cards')">Hit</button>
-                <button class="btn" onclick="stand()">Stand</button>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <footer>
         <p>Made by <a target="_blank" href="https://github.com/DakshAcharya">Daksh Acharya</a></p>
     </footer>
-
 </body>
 </html>
