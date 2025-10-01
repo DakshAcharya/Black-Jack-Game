@@ -22,12 +22,18 @@
     <div id="game" class="game">
         <div class="player">
             <h2>Player</h2>
-            <div class="player-cards">
 
+            <div class="player-cards">
+                <div class="card">
+                    <div class="card-top red">A</div>
+                    <div class="card-suit red">♥</div>
+                    <div class="card-bottom red">A</div>
+                </div>
             </div>
 
+
             <div class="button-container">
-                <button class="btn" onclick="dealCards(playerHand, deck)">Hit</button>
+                <button class="btn" onclick="dealCards(playerHand, deck, '.player-cards')">Hit</button>
                 <button class="btn" onclick="stand()">Stand</button>
             </div>
         </div>

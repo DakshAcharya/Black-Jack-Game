@@ -31,21 +31,39 @@ function shuffleDeck(deck) {
 }
 
 // Deal a card from the deck to a hand
-function dealCards(hand, deck) {
+function dealCards(hand, deck, containerSelector) {
     let randomIndex = Math.floor(Math.random() * deck.length);
     const card = deck[randomIndex];
     deck.splice(randomIndex, 1);
     hand.push(card);
+
+    const cardElement = createCardElement(card);
+    const container = document.querySelector(containerSelector);
+    if (container) {
+        container.appendChild(cardElement);
+    } else {
+        console.error('Container not found for selector:', containerSelector);
+    }
+
     return card;
 }
 
 function startGame() {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+    deck = [];
     createDeck();
     deck = shuffleDeck(deck);
+
     playerHand = [];
     dealerHand = [];
+
+    document.querySelector('.player-cards').innerHTML = ''; 
+
+    dealCards(playerHand, deck, '.player-cards');
+    dealCards(playerHand, deck, '.player-cards');
 }
+
 
 // Calculate the card's value
 function calculateCardValue(card) {
@@ -89,9 +107,39 @@ function makeBet(amount) {
     return true;
 }
 
+// The card visuals
 function createCardElement(card) {
-    const cardElement = document.createElement("div")
-    cardElement.classList.add("card")
-    cardElement.innerText = `${card.value} of ${card.suit}`
-    return cardElement
+    const cardElement = document.createElement("div");
+    cardElement.classList.add("card");
+
+    const isRed = (card.suit === 'Hearts' || card.suit === 'Diamonds');
+    const colorClass = isRed ? 'red' : 'black';
+
+    const top = document.createElement("div");
+    top.classList.add("card-top", colorClass);
+    top.textContent = card.value;
+
+    const middle = document.createElement("div");
+    middle.classList.add("card-suit", colorClass);
+    middle.textContent = getSuitSymbol(card.suit);
+
+    const bottom = document.createElement("div");
+    bottom.classList.add("card-bottom", colorClass);
+    bottom.textContent = card.value;
+
+    cardElement.appendChild(top);
+    cardElement.appendChild(middle);
+    cardElement.appendChild(bottom);
+
+    return cardElement;
+}
+
+// Get the suit
+function getSuitSymbol(suit) {
+    switch (suit) {
+        case 'Hearts': return '♥';
+        case 'Diamonds': return '♦';
+        case 'Clubs': return '♣';
+        case 'Spades': return '♠';
+    }
 }
