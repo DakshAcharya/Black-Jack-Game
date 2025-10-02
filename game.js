@@ -72,7 +72,7 @@ function calculateCardValue(card) {
 }
 
 // Calculate the hand's total value
-function calculateHandValue(hand) {
+function calculateHandValue(hand, isPlayer = true) {
     let sum = 0;
     let aces = 0;
     
@@ -88,6 +88,12 @@ function calculateHandValue(hand) {
     while (sum > 21 && aces > 0) {
         sum -= 10;
         aces--;
+    }
+
+    if (isPlayer) {
+        document.getElementById("player-counter").innerHTML = `Value: ${(sum)}`
+    } else {
+        document.getElementById("dealer-counter").innerHTML = `Value: ${(sum)}`
     }
 
     return sum;
@@ -115,21 +121,23 @@ function startGame() {
     document.querySelector('.player-cards').innerHTML = '';
     dealCards(playerHand, deck, '.player-cards');
     dealCards(playerHand, deck, '.player-cards');
+    calculateHandValue(playerHand, true);
 
     document.querySelector('.dealer-cards').innerHTML = '';
     dealCards(dealerHand, deck, '.dealer-cards');
     dealCards(dealerHand, deck, '.dealer-cards');
+    calculateHandValue(dealerHand, false);
 }
 
 // Player stands, dealer plays
 function stand() {
     // Dealer draws until 17 or higher
-    while (calculateHandValue(dealerHand) < 17) {
+    while (calculateHandValue(dealerHand, false) < 17) {
         dealCards(dealerHand, deck, '.dealer-cards');
     }
 
-    const playerValue = calculateHandValue(playerHand);
-    const dealerValue = calculateHandValue(dealerHand);
+    const playerValue = calculateHandValue(playerHand, true);
+    const dealerValue = calculateHandValue(dealerHand, false);
 
     // Determine game result
     if (dealerValue > 21) {
@@ -141,7 +149,7 @@ function stand() {
     } else {
         result = "It's a tie!";
     }
-    
+   
     showMsgDialog();
 }
 
@@ -210,12 +218,8 @@ function getSuitSymbol(suit) {
 
 // Place a bet
 function makeBet(amount) {
-    if (amount > money || amount <= 0) {
-        alert("Not enough money");
-        return false;
+    if (amount > money) {
+        result = "Not enough money"
+        showMsgDialog()
     }
-
-    bet = amount;
-    money -= bet;
-    return true;
 }

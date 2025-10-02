@@ -39,10 +39,9 @@
 
         <dialog class="msg-dialog" id="msg-dialog" style="display: none;">
             <h2>You Lost</h2>
-            <p>Play Again?</p>
             <div class="dialog-controls">
-                <button class="btn" onclick="startGame()">Yes</button>
-                <button class="btn" onclick="endGame()">No</button>
+                <button class="btn" onclick="startGame()">Play Again</button>
+                <button class="btn" onclick="endGame()">Quit</button>
             </div>
         </dialog>
 
@@ -50,11 +49,13 @@
             <div class="game-table" id="players" style="display: none;">
                 <div class="dealer-section">
                     <h2>Dealer</h2>
+                    <div id="dealer-counter" class="counter"></div>
                     <div class="dealer-cards"></div>
                 </div>
 
                 <div class="player-section">
                     <h2>Player</h2>
+                    <div id="player-counter" class="counter"></div>
                     <div class="player-cards"></div>
                 </div>
 
