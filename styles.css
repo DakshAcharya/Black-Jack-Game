@@ -304,3 +304,38 @@ footer a {
     font-weight: 800;
     color: var(--text-color);
 }
+
+.bets {
+    text-align: center;
+    margin: 1.5rem 0;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    padding: 0 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    z-index: 10;
+    max-width: 300px;
+}
+
+.bets label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.bet-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 50px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transitions);
+}
+
+.bet-btn:hover {
+    background: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--hover-color);
+}

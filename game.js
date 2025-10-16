@@ -107,6 +107,8 @@ function startGame() {
     document.getElementById('players').style.display = 'block';
     document.getElementById('game').style.height = '100vh';
     document.querySelector("footer").style.position = "relative";
+    document.getElementById('bets').style.display = "flex";
+
 
     document.location = "#game"
     
@@ -222,4 +224,9 @@ function makeBet(amount) {
         result = "Not enough money"
         showMsgDialog()
     }
+}
+
+function setBet(amount){
+    money -= amount;
+    
 }

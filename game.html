@@ -46,6 +46,17 @@
         </dialog>
 
         <section id="game" class="game-area">
+            <div class="bets" id="bets" style="display: none;">
+                <label for="bet-amount">Place your bet:</label>
+                <div class="bets-container">
+                    <button class="bet-btn" onclick="setBet(10)">$10</button>
+                    <button class="bet-btn" onclick="setBet(50)">$50</button>
+                    <button class="bet-btn" onclick="setBet(100)">$100</button>
+                    <button class="bet-btn" onclick="setBet(500)">$500</button>
+                </div>
+            <button class="btn" onclick="placeBet()">Place Bet</button>
+            </div>
+
             <div class="game-table" id="players" style="display: none;">
                 <div class="dealer-section">
                     <h2>Dealer</h2>
